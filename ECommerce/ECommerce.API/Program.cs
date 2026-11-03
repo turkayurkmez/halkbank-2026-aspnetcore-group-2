@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();// Controller yapısını kullan.
-
+builder.Services.AddResponseCompression();
 
 var app = builder.Build();
 //buradan sonra builder.Services kısmına müdahale edemezsiniz!!!!!
@@ -23,8 +23,12 @@ if (app.Environment.IsDevelopment())
 /*
  * Daha önce Use ile bütün işi tek metotta yürüttüğümüz senaryo yerine daha temiz bir çüzüm için Middleware/ altına sınıfları taşıdık ve aşağıdaki gibi pipeline'a  ekledik:
  */
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();// kendisinden sonraki herhangi bir middleware'de hata olduğunda yine bu arkadaşın çalışabilmesi için pipeline'da ilk çalışması gereken ilk middleware her zaman Exception middleware'dir 
 app.UseMiddleware<RequestLoggingMiddleware>();
 app.UseMiddleware<RequestTimingMiddleware>();
+
+app.UseResponseCompression();
 
 app.MapGet("/ping", () =>
 {
