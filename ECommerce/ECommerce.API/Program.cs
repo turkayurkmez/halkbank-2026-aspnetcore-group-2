@@ -1,4 +1,5 @@
 using ECommerce.API.Middleware;
+using ECommerce.API.Options;
 using System.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,8 +12,14 @@ builder.Services.AddOpenApi();
 builder.Services.AddControllers();// Controller yapısını kullan.
 builder.Services.AddResponseCompression();
 
+builder.Services.Configure<ShopOption>(builder.Configuration.GetSection("Shop"));
+
 var app = builder.Build();
 //buradan sonra builder.Services kısmına müdahale edemezsiniz!!!!!
+
+var value = builder.Configuration["Shop:MaxOrderItems"];
+
+app.Logger.LogInformation($"appsettings'deki değer:{value}");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
