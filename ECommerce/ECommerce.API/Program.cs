@@ -1,5 +1,8 @@
 using ECommerce.API.Middleware;
 using ECommerce.API.Options;
+using ECommerce.API.Services;
+using ECommerce.API.Store;
+using Scalar.AspNetCore;
 using System.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +17,9 @@ builder.Services.AddResponseCompression();
 
 builder.Services.Configure<ShopOption>(builder.Configuration.GetSection("Shop"));
 
+builder.Services.AddSingleton<InMemoryStore>();
+builder.Services.AddScoped<ProductService>();
+
 var app = builder.Build();
 //buradan sonra builder.Services kısmına müdahale edemezsiniz!!!!!
 
@@ -25,6 +31,7 @@ app.Logger.LogInformation($"appsettings'deki değer:{value}");
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapScalarApiReference();
 }
 
 /*

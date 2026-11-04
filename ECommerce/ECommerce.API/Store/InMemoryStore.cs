@@ -1,10 +1,11 @@
 ﻿using ECommerce.API.Models;
+using ECommerce.API.Repositories;
 
 namespace ECommerce.API.Store
 {
-    public class InMemoryStore
+    public class InMemoryStore : IRepository<Product>
     {
-        public List<Product> Products { get; }
+        public List<Product> Products { get; } = new List<Product>();
 
         private int _lastProductId;
 
@@ -13,14 +14,14 @@ namespace ECommerce.API.Store
 
         public InMemoryStore()
         {
-            AddProduct("Bluetooth Kulaklık", "ELK-001", 1299m, 25, 1);
-            AddProduct("Pamuklu Tişört", "GYM-001", 250, 10, 2);
-            AddProduct("Temiz Kod", "KTP-001", 350, 60, 3);
+            Add("Bluetooth Kulaklık", "ELK-001", 1299m, 25, 1);
+            Add("Pamuklu Tişört", "GYM-001", 250, 10, 2);
+            Add("Temiz Kod", "KTP-001", 350, 60, 3);
         }
 
-        public void AddProduct(string name, string sku, decimal price, int stock, int categoryId)
+        public void Add(string name, string sku, decimal price, int stock, int categoryId)
         {
-            Products.Add(new Product
+            Add(new Product
             {
                 CategoryId = categoryId,
                 Id = NextProductId(),
@@ -29,6 +30,11 @@ namespace ECommerce.API.Store
                 Sku = sku,
                 Stock = stock,
             });
+        }
+
+        public void Add(Product entity)
+        {
+            Products.Add(entity);
         }
     }
 }
