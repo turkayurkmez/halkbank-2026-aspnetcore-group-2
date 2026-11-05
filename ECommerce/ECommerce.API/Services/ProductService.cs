@@ -3,7 +3,7 @@ using ECommerce.API.Store;
 
 namespace ECommerce.API.Services
 {
-    public class ProductService
+    public class ProductService : IProductService
     {
         private readonly InMemoryStore _store;
 

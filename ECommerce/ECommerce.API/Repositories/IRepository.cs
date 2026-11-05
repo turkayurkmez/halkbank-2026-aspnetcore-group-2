@@ -1,7 +1,13 @@
 ﻿namespace ECommerce.API.Repositories
 {
-    public interface IRepository<T> where T:class, new()
+    public interface IRepository<T> where T : class, new()
     {
-        void Add(T entity);
+        Task AddAsync(T entity);
+        Task UpdateAsync(T entity);
+
+        Task DeleteAsync(int id);
+        Task<IEnumerable<T>> GetAllAsync();
+        Task<T> GetByIdAsync(int id);
+
     }
 }

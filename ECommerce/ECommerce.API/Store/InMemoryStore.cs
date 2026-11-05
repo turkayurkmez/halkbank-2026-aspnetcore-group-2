@@ -3,7 +3,7 @@ using ECommerce.API.Repositories;
 
 namespace ECommerce.API.Store
 {
-    public class InMemoryStore : IRepository<Product>
+    public class InMemoryStore : IProductRepository
     {
         public List<Product> Products { get; } = new List<Product>();
 
@@ -19,9 +19,9 @@ namespace ECommerce.API.Store
             Add("Temiz Kod", "KTP-001", 350, 60, 3);
         }
 
-        public void Add(string name, string sku, decimal price, int stock, int categoryId)
+        public async Task Add(string name, string sku, decimal price, int stock, int categoryId)
         {
-            Add(new Product
+           await  AddAsync(new Product
             {
                 CategoryId = categoryId,
                 Id = NextProductId(),
@@ -32,9 +32,41 @@ namespace ECommerce.API.Store
             });
         }
 
-        public void Add(Product entity)
+        public Task<IEnumerable<Product>> SearchByName(string name)
         {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Product>> SearchByPrice(decimal minimum, decimal maximum)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task AddAsync(Product entity)
+        {
+            await Task.CompletedTask;
             Products.Add(entity);
+
+        }
+
+        public Task UpdateAsync(Product entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Product>> GetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Product> GetByIdAsync(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

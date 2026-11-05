@@ -19,8 +19,8 @@ builder.Services.AddResponseCompression();
 builder.Services.Configure<ShopOption>(builder.Configuration.GetSection("Shop"));
 
 builder.Services.AddSingleton<InMemoryStore>();
-builder.Services.AddScoped<ProductService>();
-builder.Services.AddScoped<OrderService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 builder.Services.AddSingleton<INotificationChannel, EmailChannel>();
 builder.Services.AddSingleton<INotificationChannel, SMSChannel>();
