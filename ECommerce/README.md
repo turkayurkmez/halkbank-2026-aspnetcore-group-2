@@ -20,24 +20,39 @@
 - **Options Pattern ve konfigürasyon okuma** (`IOptions<ShopOption>`, `IConfiguration`)
 - **Ortam bazlı davranış** (`IWebHostEnvironment` ile development kontrolü)
 
-## Öğrenilen Kavramlar
+## Gün Gün Öğrenilen Kavramlar (Tarih ve Konu)
 
-- ASP.NET Core request pipeline mantığı
-- Middleware zinciri ve `await next(context)` davranışı
-- `OnStarting` ile response header yönetimi
-- Minimal API ve Controller yaklaşımının birlikte kullanımı
-- Geliştirme ortamına özel OpenAPI yayınlama
-- In-memory store ile kalıcı olmayan veri yönetimi
-- Katmanlı yapı: Controller -> Service -> Store akışı
-- Options Pattern ile strongly-typed ayar erişimi
+### 2026-11-02
 
-## SOLID Bağlantısı (Bugünün Commit’lerine Göre)
+- ASP.NET Core Web API proje iskeleti ve başlangıç yapısı
+- Template temizliği (WeatherForecast kaldırımı) ve sade başlangıç
+- OpenAPI yapılandırması, uygulama URL ayarı ve `/ping` endpoint’i
+- Temel middleware akışının kurulması
 
-Bugünkü commit akışında öne çıkan başlıklar:
+### 2026-11-03
 
-- `Introduce service and repository abstractions`
-- `Dependency Injection lifetime POC in asp.net core`
-- `Add SOLID order processing and notifications`
+- Middleware sınıflarının ayrıştırılması (`RequestLogging`, `RequestTiming`)
+- MVC/Controller desteği ve merkezi exception handling middleware
+- Ortama göre konfigürasyon (Development/Production appsettings)
+- Options Pattern (`ShopOption`) ve `IConfiguration` ile ayar okuma
+
+### 2026-11-04
+
+- E-ticaret domain modellerinin (`Product`, `Category`, `Order`, `OrderItem`) eklenmesi
+- In-memory store ile veri katmanı başlangıcı
+- Katmanlı ürün API’si: Controller + Service + Repository akışı
+- Scalar/OpenAPI dokümantasyon deneyimi
+- SOLID kavramlarının mimari dokümantasyona yansıtılması
+
+### 2026-11-05
+
+- Service ve repository soyutlamalarının genişletilmesi (`IProductService`, `IOrderService`, `IRepository<T>`, `IProductRepository`)
+- Sipariş ve bildirim süreci için SOLID odaklı yapı
+- DI lifetime deneyi (`Singleton`, `Scoped`) ve bağımlılıkların container üzerinden yönetimi
+- Çoklu bildirim kanalı yaklaşımı (`Email`, `SMS`, `WhatsApp`) ve `IEnumerable<INotificationChannel>` kullanımı
+- LSP uyumlu tasarım demosu (kare/dikdörtgen örneği)
+
+## SOLID Bağlantısı (Bugünün Çalışmalarına Göre)
 
 Bu değişikliklerde özellikle aşağıdaki ilkeler vurgulanmıştır:
 
@@ -66,11 +81,12 @@ Bu değişikliklerde özellikle aşağıdaki ilkeler vurgulanmıştır:
 
 Bu demo sonunda:
 
-- Katılımcılar, bir ASP.NET Core uygulamasında pipeline sırasının önemini açıklayabilir.
-- Katılımcılar, özel middleware yazarak istek/yanıt akışına müdahale edebilir.
-- Katılımcılar, işlem süresini ölçerek response header üzerinden istemciye iletebilir.
-- Katılımcılar, hem `/ping` gibi basit endpoint hem de controller tabanlı endpoint yapısını aynı projede konumlandırabilir.
-- Katılımcılar, OpenAPI yapılandırmasını development ortamına göre koşullu olarak etkinleştirebilir.
+- Katılımcılar, ASP.NET Core uygulamasını katmanlı şekilde (Controller -> Service -> Repository/Store) yapılandırabilir.
+- Katılımcılar, middleware zincirini doğru sırada kurgulayıp loglama, süre ölçümü ve hata yakalama davranışlarını yönetebilir.
+- Katılımcılar, `Options Pattern` ve `IConfiguration` ile ortama bağlı ayarları güvenli biçimde okuyabilir.
+- Katılımcılar, `DI` container üzerinden uygun yaşam süresiyle (`Singleton`, `Scoped`) bağımlılık kaydı yapabilir.
+- Katılımcılar, birden fazla bildirim kanalını (`Email`, `SMS`, `WhatsApp`) ortak arayüz üzerinden genişletilebilir şekilde çalıştırabilir.
+- Katılımcılar, SRP, OCP ve ISP ilkelerini somut sınıf ve arayüz tasarımlarında uygulayabilir.
 
 ## Not
 
