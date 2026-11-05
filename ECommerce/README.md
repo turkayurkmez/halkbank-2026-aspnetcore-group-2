@@ -31,19 +31,36 @@
 - Katmanlı yapı: Controller -> Service -> Store akışı
 - Options Pattern ile strongly-typed ayar erişimi
 
-## SOLID Bağlantısı (OCP ve SRP)
+## SOLID Bağlantısı (Bugünün Commit’lerine Göre)
+
+Bugünkü commit akışında öne çıkan başlıklar:
+
+- `Introduce service and repository abstractions`
+- `Dependency Injection lifetime POC in asp.net core`
+- `Add SOLID order processing and notifications`
+
+Bu değişikliklerde özellikle aşağıdaki ilkeler vurgulanmıştır:
 
 - **SRP (Single Responsibility Principle)**
-  - `ProductsController` yalnızca HTTP istek/yanıt yönetir.
-  - Ürünlere ait iş akışı `ProductService` içinde tutulur.
-  - Veri saklama sorumluluğu `InMemoryStore` sınıfındadır.
-  - Böylece her sınıfın tek bir değişim nedeni olur.
+  - `ProductsController` ve `OrdersController` HTTP katmanına odaklanır.
+  - İş akışı `ProductService` ve `OrderService` sınıflarında yürütülür.
+  - Bildirim gönderimi `NotificationService` içinde toplanır.
+  - Veri erişimi `InMemoryStore`/repository tarafında izole edilir.
 
 - **OCP (Open/Closed Principle)**
-  - `IRepository<T>` soyutlaması sayesinde veri kaynağı genişletilebilir.
-  - Bugün `InMemoryStore` kullanılırken, yarın farklı bir repository (ör. veritabanı tabanlı) eklenebilir.
-  - Bu genişleme, mevcut controller/service kodunu minimum değişiklikle koruyarak yapılır.
-  - Yani yapı, **genişletmeye açık**, mevcut davranışı bozacak değişikliklere karşı **kapalı** olacak şekilde tasarlanır.
+  - `IRepository<T>` ve `IProductRepository` ile veri erişimi soyutlandı.
+  - `INotificationChannel` sayesinde yeni kanal (ör. push, webhook) eklemek, mevcut iş akışını bozmadan mümkündür.
+  - `Program.cs` içinde çoklu kanal kaydı (`Email`, `SMS`, `WhatsApp`) ile genişletilebilirlik gösterilmiştir.
+
+- **DI (Dependency Injection)**
+  - Servis kayıtları `Program.cs` içinde yaşam süresiyle birlikte tanımlandı (`AddSingleton`, `AddScoped`).
+  - `IProductService` ve `IOrderService` arayüzleri üzerinden somut sınıflar enjekte edilir.
+  - `NotificationService`, `IEnumerable<INotificationChannel>` alarak tüm kayıtlı kanalları otomatik tüketir.
+
+- **ISP (Interface Segregation Principle)**
+  - Tek ve şişkin bir servis arayüzü yerine amaca özel arayüzler kullanıldı (`IProductService`, `IOrderService`).
+  - Bildirim tarafında da dar ve net bir kontrat tanımlandı (`INotificationChannel`).
+  - Bu sayede tüketiciler yalnızca ihtiyaç duydukları metotlara bağımlı kalır.
 
 ## Öğrenme Çıktıları
 
