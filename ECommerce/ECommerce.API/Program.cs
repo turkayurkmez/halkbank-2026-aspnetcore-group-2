@@ -1,4 +1,5 @@
 using ECommerce.API.Middleware;
+using ECommerce.API.Notifications;
 using ECommerce.API.Options;
 using ECommerce.API.Services;
 using ECommerce.API.Store;
@@ -19,6 +20,12 @@ builder.Services.Configure<ShopOption>(builder.Configuration.GetSection("Shop"))
 
 builder.Services.AddSingleton<InMemoryStore>();
 builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<OrderService>();
+
+builder.Services.AddSingleton<INotificationChannel, EmailChannel>();
+builder.Services.AddSingleton<INotificationChannel, SMSChannel>();
+builder.Services.AddSingleton<INotificationChannel, WhatsAppChannel>();
+builder.Services.AddScoped<NotificationService>();
 
 var app = builder.Build();
 //buradan sonra builder.Services kısmına müdahale edemezsiniz!!!!!
