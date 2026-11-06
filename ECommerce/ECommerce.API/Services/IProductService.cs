@@ -6,6 +6,6 @@ namespace ECommerce.API.Services
     {
         Task<Product> CreateAsync(Product product);
         Task<Product?> GetProductAsync(int id);
-        Task<IReadOnlyList<Product>> GetProductsAsync();
+        Task<IEnumerable<Product>> GetProductsAsync();
     }
 }

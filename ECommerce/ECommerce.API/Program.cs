@@ -1,8 +1,11 @@
+using ECommerce.API.Data;
 using ECommerce.API.Middleware;
 using ECommerce.API.Notifications;
 using ECommerce.API.Options;
+using ECommerce.API.Repositories;
 using ECommerce.API.Services;
 using ECommerce.API.Store;
+using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using System.Diagnostics;
 
@@ -21,11 +24,15 @@ builder.Services.Configure<ShopOption>(builder.Configuration.GetSection("Shop"))
 builder.Services.AddSingleton<InMemoryStore>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IProductRepository, EFProductRepository>();
 
 builder.Services.AddSingleton<INotificationChannel, EmailChannel>();
 builder.Services.AddSingleton<INotificationChannel, SMSChannel>();
 builder.Services.AddSingleton<INotificationChannel, WhatsAppChannel>();
 builder.Services.AddScoped<NotificationService>();
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+
+
 
 var app = builder.Build();
 //buradan sonra builder.Services kısmına müdahale edemezsiniz!!!!!
@@ -39,6 +46,8 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
     app.MapScalarApiReference();
+    using var scope = app.Services.CreateScope();
+    await DataSeeder.SeedAsync(scope.ServiceProvider.GetRequiredService<AppDbContext>());
 }
 
 /*

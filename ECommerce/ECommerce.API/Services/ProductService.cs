@@ -1,4 +1,5 @@
 ﻿using ECommerce.API.Models;
+using ECommerce.API.Repositories;
 using ECommerce.API.Store;
 
 namespace ECommerce.API.Services
@@ -7,15 +8,18 @@ namespace ECommerce.API.Services
     {
         private readonly InMemoryStore _store;
 
-        public ProductService(InMemoryStore store)
+        private readonly IProductRepository productRepository;
+
+        public ProductService(InMemoryStore store, IProductRepository productRepository)
         {
             _store = store;
+            this.productRepository = productRepository;
         }
 
-        public async Task<IReadOnlyList<Product>> GetProductsAsync()
+        public async Task<IEnumerable<Product>> GetProductsAsync()
         {
-            await Task.CompletedTask;
-            return _store.Products.ToList();
+
+            return await productRepository.GetAllAsync();
         }
 
 

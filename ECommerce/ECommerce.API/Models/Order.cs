@@ -1,6 +1,6 @@
 ﻿namespace ECommerce.API.Models
 {
-    public class Order
+    public class Order : IEntity
     {
         public int Id { get; set; }
         public int CustomerId { get; set; }
@@ -9,5 +9,8 @@
         public List<OrderItem> Items { get; set; } = [];
 
         public decimal Total() => Items.Sum(x => x.UnitPrice * x.Quantity);
+        public Customer Customer { get; set; }
+
+     
     }
 }
