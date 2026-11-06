@@ -52,6 +52,14 @@
 - Çoklu bildirim kanalı yaklaşımı (`Email`, `SMS`, `WhatsApp`) ve `IEnumerable<INotificationChannel>` kullanımı
 - LSP uyumlu tasarım demosu (kare/dikdörtgen örneği)
 
+### 2026-11-06
+
+- EF Core ile ürün verilerinin kalıcı hale getirilmesi (`AppDbContext`, `EFProductRepository`)
+- Entity modellerinin genişletilmesi (`IEntity`, `Customer`, `Review`) ve ilişkilerin güncellenmesi (`Product`, `Category`, `Order`, `OrderItem`)
+- Migration yönetimi: initial migration ve Product-Category ilişki düzeltmesi
+- Başlangıç verisi için `DataSeeder` ve bağlantı ayarlarının (`appsettings.json`, `Program.cs`) yapılandırılması
+- `ProductService` ve `IProductService` yapısının EF tabanlı repository ile uyumlu hale getirilmesi
+
 ## SOLID Bağlantısı (Bugünün Çalışmalarına Göre)
 
 Bu değişikliklerde özellikle aşağıdaki ilkeler vurgulanmıştır:
