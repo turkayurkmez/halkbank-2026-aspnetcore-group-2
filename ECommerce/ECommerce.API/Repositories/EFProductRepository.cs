@@ -27,7 +27,14 @@ namespace ECommerce.API.Repositories
 
         public async Task<Product?> GetByIdAsync(int id)
         {
-            return await dbContext.Products.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
+            //Eager Loading: İlişkili olduğu tablodaki ilişkili satırı da srorgu sırasında eklemek için kullanılır.
+            return await dbContext.Products.AsNoTracking().Include(p=>p.Category).FirstOrDefaultAsync(p => p.Id == id);
+        }
+
+        //Bunu yazdım ama controller'dan çağırmayacağız.
+        public async Task<Product> GetProductWithCategory(int id)
+        {
+            return await dbContext.Products.AsNoTracking().Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task<IEnumerable<Product>> SearchByName(string name)

@@ -7,5 +7,7 @@ namespace ECommerce.API.Repositories
         Task<IEnumerable<Product>> SearchByName(string name);
         Task<IEnumerable<Product>> SearchByPrice(decimal minimum, decimal maximum);
 
+        Task<Product> GetProductWithCategory(int id);
+
     }
 }

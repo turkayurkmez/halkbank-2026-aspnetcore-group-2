@@ -8,6 +8,7 @@ using ECommerce.API.Store;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using System.Diagnostics;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,12 +17,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-builder.Services.AddControllers();// Controller yapısını kullan.
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});// Controller yapısını kullan.
 builder.Services.AddResponseCompression();
 
 builder.Services.Configure<ShopOption>(builder.Configuration.GetSection("Shop"));
 
-builder.Services.AddSingleton<InMemoryStore>();
+//builder.Services.AddSingleton<InMemoryStore>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IProductRepository, EFProductRepository>();
