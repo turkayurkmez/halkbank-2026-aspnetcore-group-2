@@ -52,5 +52,18 @@ namespace ECommerce.API.Repositories
             dbContext.Products.Update(entity);
             await dbContext.SaveChangesAsync();
         }
+
+        //Projeksion: Her zaman ilişkili tabloları almal maaliyetlidir o nedenle ihtiyaca yönelik işlemler de yapılmalı.
+        public async Task<IEnumerable<ProductSummary>> GetProductSummaries()
+        {
+            return await dbContext.Products
+                            .OrderByDescending(p => p.Id)
+                            .Select(p => new ProductSummary(Id: p.Id, Name: p.Name, CategoryName: p.Category.Name, Price: p.Price))
+                            .ToListAsync();
+
+        }
+
     }
+
+    public record ProductSummary(int Id, string Name, string CategoryName, decimal Price);
 }

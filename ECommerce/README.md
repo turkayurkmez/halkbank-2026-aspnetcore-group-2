@@ -58,7 +58,14 @@
 - Entity modellerinin genişletilmesi (`IEntity`, `Customer`, `Review`) ve ilişkilerin güncellenmesi (`Product`, `Category`, `Order`, `OrderItem`)
 - Migration yönetimi: initial migration ve Product-Category ilişki düzeltmesi
 - Başlangıç verisi için `DataSeeder` ve bağlantı ayarlarının (`appsettings.json`, `Program.cs`) yapılandırılması
-- `ProductService` ve `IProductService` yapısının EF tabanlı repository ile uyumlu hale getirilmesi
+EF tabanlı repository ile uyumlu hale getirilmesi
+
+### 2026-11-09
+
+- Ürünlerin EF repository üzerinden kalıcı hale getirilmesi (`ProductsController`, `ProductService`, `EFProductRepository`)
+- `IProductService` ve `IProductRepository` sözleşmelerinin genişletilmesi
+- `InMemoryStore` yapısının sadeleştirilmesi ve `Program.cs` içinde EF repository kullanımına geçiş
+- EF Core performans demosu (`Demo.EFPerformance` konsol projesi)
 
 ## SOLID Bağlantısı (Bugünün Çalışmalarına Göre)
 
