@@ -8,7 +8,7 @@ namespace ECommerce.API.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly IProductService _service ;
+        private readonly IProductService _service;
 
         public ProductsController(IProductService service)
         {
@@ -30,8 +30,35 @@ namespace ECommerce.API.Controllers
         {
             var created = await _service.CreateAsync(product);
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
-        } 
-        
-        
+        }
+
+        [HttpGet("search/{name}")]
+        public async Task<IActionResult> Search(string name, [FromQuery] decimal? minPrice = 0, [FromQuery] decimal? maxPrice = 0)
+        {
+
+
+            IEnumerable<Product> products = [];
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                products = await _service.SearchAsync(name);
+
+            }
+
+            if (minPrice != 0 && maxPrice != 0)
+            {
+                products = await _service.SearchAsync(minPrice.Value, maxPrice.Value);
+
+
+            }
+
+            return Ok(products);
+
+
+        }
+
+
+
+
     }
 }

@@ -6,40 +6,44 @@ namespace ECommerce.API.Repositories
 {
     public class EFProductRepository(AppDbContext dbContext) : IProductRepository
     {
-        
-        public Task AddAsync(Product entity)
+
+        public async Task AddAsync(Product entity)
         {
-            throw new NotImplementedException();
+            await dbContext.Products.AddAsync(entity);
+            await dbContext.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var existing = await dbContext.Products.FindAsync(id);
+            dbContext.Products.Remove(existing);
+            await dbContext.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Product>> GetAllAsync()
         {
-            return await dbContext.Products.ToListAsync();
+            return await dbContext.Products.AsNoTracking().OrderBy(p => p.Id).ToListAsync();
         }
 
-        public Task<Product> GetByIdAsync(int id)
+        public async Task<Product?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await dbContext.Products.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public Task<IEnumerable<Product>> SearchByName(string name)
+        public async Task<IEnumerable<Product>> SearchByName(string name)
         {
-            throw new NotImplementedException();
+            return await dbContext.Products.AsNoTracking().Where(p => p.Name.Contains(name)).ToListAsync();
         }
 
-        public Task<IEnumerable<Product>> SearchByPrice(decimal minimum, decimal maximum)
+        public async Task<IEnumerable<Product>> SearchByPrice(decimal minimum, decimal maximum)
         {
-            throw new NotImplementedException();
+          return await dbContext.Products.Where(p=>p.Price>= minimum && p.Price<= maximum).AsNoTracking().ToListAsync();
         }
 
-        public Task UpdateAsync(Product entity)
+        public async Task UpdateAsync(Product entity)
         {
-            throw new NotImplementedException();
+            dbContext.Products.Update(entity);
+            await dbContext.SaveChangesAsync();
         }
     }
 }
