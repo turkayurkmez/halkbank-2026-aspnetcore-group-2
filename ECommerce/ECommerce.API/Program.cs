@@ -7,6 +7,7 @@ using ECommerce.API.Services;
 using ECommerce.API.Store;
 using ECommerce.Infrastructure.Data;
 using ECommerce.Infrastructure.Repositories;
+using ECommerce.Infrastructure.UnitOfWorkPattern;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using System.Diagnostics;
@@ -30,7 +31,7 @@ builder.Services.Configure<ShopOption>(builder.Configuration.GetSection("Shop"))
 //builder.Services.AddSingleton<InMemoryStore>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
-builder.Services.AddScoped<IProductRepository, EFProductRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddSingleton<INotificationChannel, EmailChannel>();
 builder.Services.AddSingleton<INotificationChannel, SMSChannel>();

@@ -2,36 +2,38 @@
 using ECommerce.API.Store;
 using ECommerce.Infrastructure.Entities;
 using ECommerce.Infrastructure.Repositories;
+using ECommerce.Infrastructure.UnitOfWorkPattern;
 
 namespace ECommerce.API.Services
 {
-    public class ProductService : IProductService
+    public class ProductService(IUnitOfWork uow) : IProductService
     {
         // private readonly InMemoryStore _store;
 
-        private readonly IProductRepository productRepository;
+        //private readonly IProductRepository productRepository;
 
-        public ProductService(IProductRepository productRepository)
-        {
-            // _store = store;
-            this.productRepository = productRepository;
-        }
+        //public ProductService(IProductRepository productRepository)
+        //{
+        //    // _store = store;
+        //    this.productRepository = productRepository;
+        //}
 
         public async Task<IEnumerable<Product>> GetProductsAsync()
         {
 
-            return await productRepository.GetAllAsync();
+            return await uow.Products.GetAllAsync();
         }
 
 
         public async Task<Product?> GetProductAsync(int id)
         {
-            return await productRepository.GetByIdAsync(id);
+            return await uow.Products.GetByIdAsync(id);
         }
 
         public async Task<Product> CreateAsync(Product product)
         {
-            await productRepository.AddAsync(product);
+            await uow.Products.AddAsync(product);
+            await uow.SaveChangesAsync();
             return product;
 
 
@@ -39,19 +41,20 @@ namespace ECommerce.API.Services
 
         public async Task<IEnumerable<Product>> SearchAsync(string name)
         {
-            return await productRepository.SearchByName(name);
+            return await uow.Products.SearchByName(name);
         }
 
         public async Task<IEnumerable<Product>> SearchAsync(decimal minPrice, decimal maxPrice)
         {
-            return await productRepository.SearchByPrice(minPrice, maxPrice);
+            return await uow.Products.SearchByPrice(minPrice, maxPrice);
         }
 
         public async Task<bool> DeleteAsync(int id)
         {
             try
             {
-                await productRepository.DeleteAsync(id);
+                await uow.Products.DeleteAsync(id);
+                await uow.SaveChangesAsync();
                 return true;
             }
             catch (Exception)
@@ -64,15 +67,17 @@ namespace ECommerce.API.Services
 
         public async Task<Product> UpdateAsync(Product product)
         {
-            await productRepository.UpdateAsync(product);
+            await uow.Products.UpdateAsync(product);
+            await uow.SaveChangesAsync();
             return product;
         }
 
         public async Task<Product> DiscountPrice(int id, decimal discountRate)
         {
-            var product = await productRepository.GetByIdAsync(id);
+            var product = await uow.Products.GetByIdAsync(id);
             product.Price *= 1m - discountRate;
-            await productRepository.UpdateAsync(product);
+            await uow.Products.UpdateAsync(product);
+            await uow.SaveChangesAsync();
             return product;
         }
     }

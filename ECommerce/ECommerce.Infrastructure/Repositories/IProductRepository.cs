@@ -9,5 +9,7 @@ namespace ECommerce.Infrastructure.Repositories
 
         Task<Product> GetProductWithCategory(int id);
 
+
+
     }
 }

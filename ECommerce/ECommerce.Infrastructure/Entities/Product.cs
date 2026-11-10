@@ -13,9 +13,9 @@ namespace ECommerce.Infrastructure.Entities
         public int Stock { get; set; }
         public int CategoryId { get; set; }
 
-        public Category Category { get; set; }
-        public List<OrderItem> OrderItems { get; set; }
-        public ICollection<Review> Reviews { get; set; }
+        public Category? Category { get; set; }
+        public List<OrderItem>? OrderItems { get; set; }
+        public ICollection<Review>? Reviews { get; set; }
 
     }
 }

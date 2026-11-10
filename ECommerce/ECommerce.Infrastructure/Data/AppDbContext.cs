@@ -27,6 +27,8 @@ namespace ECommerce.Infrastructure.Data
                 e.HasOne(p => p.Category).WithMany(c => c.Products)
                                          .HasForeignKey(p => p.CategoryId)
                                          .OnDelete(DeleteBehavior.Restrict);
+
+              
             });
 
             modelBuilder.Entity<Customer>(e =>
