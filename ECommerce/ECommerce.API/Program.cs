@@ -1,10 +1,12 @@
-using ECommerce.API.Data;
+
 using ECommerce.API.Middleware;
 using ECommerce.API.Notifications;
 using ECommerce.API.Options;
-using ECommerce.API.Repositories;
+
 using ECommerce.API.Services;
 using ECommerce.API.Store;
+using ECommerce.Infrastructure.Data;
+using ECommerce.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using System.Diagnostics;

@@ -1,7 +1,7 @@
-﻿using ECommerce.API.Models;
+﻿using ECommerce.Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace ECommerce.API.Data
+namespace ECommerce.Infrastructure.Data
 {
     public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
     {

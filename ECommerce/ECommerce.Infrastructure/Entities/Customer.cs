@@ -1,4 +1,6 @@
-﻿namespace ECommerce.API.Models
+﻿
+
+namespace ECommerce.Infrastructure.Entities
 {
     public class Customer : IEntity
     {

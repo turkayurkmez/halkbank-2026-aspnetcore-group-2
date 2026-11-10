@@ -1,5 +1,4 @@
-﻿using ECommerce.API.Models;
-using ECommerce.API.Repositories;
+﻿
 
 namespace ECommerce.API.Store
 {

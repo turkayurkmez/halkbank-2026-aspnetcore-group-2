@@ -1,8 +1,8 @@
-﻿using ECommerce.API.Data;
-using ECommerce.API.Models;
+﻿using ECommerce.Infrastructure.Data;
+using ECommerce.Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace ECommerce.API.Repositories
+namespace ECommerce.Infrastructure.Repositories
 {
     public class EFProductRepository(AppDbContext dbContext) : IProductRepository
     {

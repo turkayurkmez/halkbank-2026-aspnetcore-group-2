@@ -1,6 +1,6 @@
-﻿using ECommerce.API.Models;
+﻿using ECommerce.Infrastructure.Entities;
 
-namespace ECommerce.API.Repositories
+namespace ECommerce.Infrastructure.Repositories
 {
     public interface IProductRepository : IRepository<Product>
     {

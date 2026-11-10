@@ -1,7 +1,8 @@
-﻿using ECommerce.API.Models;
+﻿
+using ECommerce.Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace ECommerce.API.Data
+namespace ECommerce.Infrastructure.Data
 {
     public static class DataSeeder
     {
