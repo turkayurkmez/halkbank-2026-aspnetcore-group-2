@@ -64,8 +64,13 @@ EF tabanlı repository ile uyumlu hale getirilmesi
 
 - Ürünlerin EF repository üzerinden kalıcı hale getirilmesi (`ProductsController`, `ProductService`, `EFProductRepository`)
 - `IProductService` ve `IProductRepository` sözleşmelerinin genişletilmesi
-- `InMemoryStore` yapısının sadeleştirilmesi ve `Program.cs` içinde EF repository kullanımına geçiş
+
 - EF Core performans demosu (`Demo.EFPerformance` konsol projesi)
+
+### 2026-11-10
+
+- Unit of Work yaklaşımıyla repository'lerin kullanılması
+- Altyapı katmanının ayrı bir projeye taşınması
 
 ## SOLID Bağlantısı (Bugünün Çalışmalarına Göre)
 
