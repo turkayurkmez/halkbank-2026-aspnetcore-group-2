@@ -72,6 +72,18 @@ EF tabanlı repository ile uyumlu hale getirilmesi
 - Unit of Work yaklaşımıyla repository'lerin kullanılması
 - Altyapı katmanının ayrı bir projeye taşınması
 
+### 2026-11-11
+
+- FluentValidation ile istek doğrulama (`AddValidatorsFromAssemblyContaining`, validator keşfi)
+- Entity yerine istek modeli kullanımı (`CreateProductRequest` record'u)
+- Ürün doğrulama kuralları (`CreateProductValidator`): ad zorunlu/en fazla 200 karakter, fiyat pozitif, stok negatif olamaz
+- Asenkron doğrulama (`MustAsync`): kategori varlığı ve SKU benzersizliği kontrolü (`IUnitOfWork` ile)
+- Yeniden kullanılabilir özel kural (`SkuRule.MustBeValidSku`) ve `Cascade(CascadeMode.Stop)`
+- Sipariş doğrulaması (`CreateOrderValidator`): `RuleForEach`, `ChildRules` ve `IOptions<ShopOption>` ile azami ürün sayısı
+- Doğrulama hatalarının standart yanıta çevrilmesi (`ToValidationProblem` extension'ı, `ValidationProblem`)
+- Controller'da `IValidator<T>` enjekte edilerek manuel doğrulama ve request -> entity eşlemesi
+- Scalar başlangıç ayarının (`launchSettings.json`) yapılandırılması
+
 ## SOLID Bağlantısı (Bugünün Çalışmalarına Göre)
 
 Bu değişikliklerde özellikle aşağıdaki ilkeler vurgulanmıştır:
