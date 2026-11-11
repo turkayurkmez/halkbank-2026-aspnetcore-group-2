@@ -1,5 +1,8 @@
-﻿using ECommerce.API.Services;
+﻿using ECommerce.API.Extensions;
+using ECommerce.API.Models.Requests;
+using ECommerce.API.Services;
 using ECommerce.Infrastructure.Entities;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.API.Controllers
@@ -9,10 +12,12 @@ namespace ECommerce.API.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _service;
+        private readonly IValidator<CreateProductRequest> createValidator;
 
-        public ProductsController(IProductService service)
+        public ProductsController(IProductService service, IValidator<CreateProductRequest> createValidator)
         {
             _service = service;
+            this.createValidator = createValidator;
         }
 
         [HttpGet]
@@ -26,8 +31,26 @@ namespace ECommerce.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Product product)
+        public async Task<IActionResult> Create(CreateProductRequest request)
         {
+
+            var validation = await createValidator.ValidateAsync(request);
+            if (!validation.IsValid)
+            {
+                return validation.ToValidationProblem(this);
+            }
+
+
+            var product = new Product
+            {
+                Name = request.Name,
+                CategoryId = request.CategoryId,
+                Price = request.Price,
+                Sku = request.Sku,
+                Stock = request.Stock,
+            };
+
+
             var created = await _service.CreateAsync(product);
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }

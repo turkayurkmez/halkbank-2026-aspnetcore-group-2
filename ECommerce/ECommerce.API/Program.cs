@@ -1,5 +1,6 @@
 
 using ECommerce.API.Middleware;
+using ECommerce.API.Models.Requests;
 using ECommerce.API.Notifications;
 using ECommerce.API.Options;
 
@@ -8,6 +9,7 @@ using ECommerce.API.Store;
 using ECommerce.Infrastructure.Data;
 using ECommerce.Infrastructure.Repositories;
 using ECommerce.Infrastructure.UnitOfWorkPattern;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using System.Diagnostics;
@@ -39,6 +41,7 @@ builder.Services.AddSingleton<INotificationChannel, WhatsAppChannel>();
 builder.Services.AddScoped<NotificationService>();
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
+builder.Services.AddValidatorsFromAssemblyContaining<CreateProductRequest>();
 
 
 var app = builder.Build();
