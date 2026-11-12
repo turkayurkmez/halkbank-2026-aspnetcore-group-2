@@ -82,7 +82,15 @@ EF tabanlı repository ile uyumlu hale getirilmesi
 - Sipariş doğrulaması (`CreateOrderValidator`): `RuleForEach`, `ChildRules` ve `IOptions<ShopOption>` ile azami ürün sayısı
 - Doğrulama hatalarının standart yanıta çevrilmesi (`ToValidationProblem` extension'ı, `ValidationProblem`)
 - Controller'da `IValidator<T>` enjekte edilerek manuel doğrulama ve request -> entity eşlemesi
-- Scalar başlangıç ayarının (`launchSettings.json`) yapılandırılması
+(`launchSettings.json`) yapılandırılması
+
+### 2026-11-12
+
+- Mapster ile nesne eşleme (entity -> response modeli dönüşümleri)
+- Mapster yapılandırması (`TypeAdapterConfig`, `RequireDestinationMemberSource`, `Scan`, `AddMapster`, `Compile`)
+- Eşleme kurallarının ayrı sınıfta toplanması (`ProductMappingConfig`)
+- Yanıt modelleri (`ProductListResponse`, `CategoryResponse`) kullanımı
+- Ürün eşleme ve kategoriye göre ürün sorgulama (repository ve servis katmanında)
 
 ## SOLID Bağlantısı (Bugünün Çalışmalarına Göre)
 
