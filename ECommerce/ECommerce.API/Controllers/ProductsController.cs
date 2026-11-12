@@ -1,8 +1,10 @@
 ﻿using ECommerce.API.Extensions;
 using ECommerce.API.Models.Requests;
+using ECommerce.API.Models.Responses;
 using ECommerce.API.Services;
 using ECommerce.Infrastructure.Entities;
 using FluentValidation;
+using Mapster;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.API.Controllers
@@ -41,14 +43,7 @@ namespace ECommerce.API.Controllers
             }
 
 
-            var product = new Product
-            {
-                Name = request.Name,
-                CategoryId = request.CategoryId,
-                Price = request.Price,
-                Sku = request.Sku,
-                Stock = request.Stock,
-            };
+            var product = request.Adapt<Product>();
 
 
             var created = await _service.CreateAsync(product);
@@ -60,7 +55,7 @@ namespace ECommerce.API.Controllers
         {
 
 
-            IEnumerable<Product> products = [];
+            IEnumerable<ProductListResponse> products = [];
 
             if (!string.IsNullOrEmpty(name))
             {
@@ -78,6 +73,13 @@ namespace ECommerce.API.Controllers
             return Ok(products);
 
 
+        }
+
+        [HttpGet("GetAllWithCategory")]
+        public async Task<IActionResult> GetAllWithCategory()
+        {
+            var products = await _service.GetProductsWithCategoryAsync();
+            return Ok(products);
         }
 
 

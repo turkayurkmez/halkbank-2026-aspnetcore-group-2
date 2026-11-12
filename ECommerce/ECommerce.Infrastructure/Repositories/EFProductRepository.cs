@@ -67,6 +67,20 @@ namespace ECommerce.Infrastructure.Repositories
 
         }
 
+        public async Task<IEnumerable<Product>> ListWithCategoryAsync()
+        {
+            return await Set.AsNoTracking().Include(p => p.Category).OrderBy(p => p.Id).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Product>> GetByCategoryAsync(int id)
+        {
+            return await Set.AsNoTracking().Where(p => p.CategoryId == id).ToListAsync();
+        }
+
+        public async Task<Product?> GetProductBySku(string sku)
+        {
+           return await Set.AsNoTracking().FirstOrDefaultAsync(p=> p.Sku == sku);
+        }
     }
 
     public record ProductSummary(int Id, string Name, string CategoryName, decimal Price);

@@ -9,6 +9,10 @@ namespace ECommerce.Infrastructure.Repositories
 
         Task<Product> GetProductWithCategory(int id);
 
+        Task<IEnumerable<Product>> ListWithCategoryAsync();
+        Task<IEnumerable<Product>> GetByCategoryAsync(int id);
+
+        Task<Product?> GetProductBySku(string sku);
 
 
     }

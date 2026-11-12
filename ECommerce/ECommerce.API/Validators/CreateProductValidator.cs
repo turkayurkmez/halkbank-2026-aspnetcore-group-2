@@ -29,7 +29,7 @@ namespace ECommerce.API.Validators
             RuleFor(c => c.Sku)
                 .Cascade(CascadeMode.Stop)
                 .MustBeValidSku()
-                .MustAsync(async (sku, _) => await unitOfWork.Products.GetAllAsync(p => p.Sku == sku) is null)
+                .MustAsync(async (sku, _) => await unitOfWork.Products.GetProductBySku(sku) is null)
                 .WithMessage("Bu isimde bir sku zaten var.");
 
 

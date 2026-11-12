@@ -1,8 +1,11 @@
 ﻿
+using ECommerce.API.Models.Responses;
 using ECommerce.API.Store;
 using ECommerce.Infrastructure.Entities;
 using ECommerce.Infrastructure.Repositories;
 using ECommerce.Infrastructure.UnitOfWorkPattern;
+using Mapster;
+using MapsterMapper;
 
 namespace ECommerce.API.Services
 {
@@ -18,10 +21,11 @@ namespace ECommerce.API.Services
         //    this.productRepository = productRepository;
         //}
 
-        public async Task<IEnumerable<Product>> GetProductsAsync()
+        public async Task<IEnumerable<ProductListResponse>> GetProductsAsync()
         {
 
-            return await uow.Products.GetAllAsync();
+            var products = await uow.Products.GetAllAsync();
+            return products.Adapt<IEnumerable<ProductListResponse>>();
         }
 
 
@@ -39,14 +43,17 @@ namespace ECommerce.API.Services
 
         }
 
-        public async Task<IEnumerable<Product>> SearchAsync(string name)
+        public async Task<IEnumerable<ProductListResponse>> SearchAsync(string name)
         {
-            return await uow.Products.SearchByName(name);
+            var products = await uow.Products.SearchByName(name);
+            return products.Adapt<IEnumerable<ProductListResponse>>();
         }
 
-        public async Task<IEnumerable<Product>> SearchAsync(decimal minPrice, decimal maxPrice)
+        public async Task<IEnumerable<ProductListResponse>> SearchAsync(decimal minPrice, decimal maxPrice)
         {
-            return await uow.Products.SearchByPrice(minPrice, maxPrice);
+            var products = await uow.Products.SearchByPrice(minPrice, maxPrice);
+            return products.Adapt<IEnumerable<ProductListResponse>>();
+
         }
 
         public async Task<bool> DeleteAsync(int id)
@@ -79,6 +86,27 @@ namespace ECommerce.API.Services
             await uow.Products.UpdateAsync(product);
             await uow.SaveChangesAsync();
             return product;
+        }
+
+        public async Task<IEnumerable<ProductListResponse>> GetProductsWithCategoryAsync()
+        {
+            var products = await uow.Products.ListWithCategoryAsync();
+
+
+            //return products.Select(p => new ProducListResponse(Id: p.Id, Name: p.Name, Price: p.Price, Stock: p.Stock, CategoryName: p.Category?.Name ?? ""));
+
+            return products.Adapt<IEnumerable<ProductListResponse>>();
+        }
+
+
+
+
+
+        public async Task<IEnumerable<ProductListResponse>> GetProductsByCategoryAsync(int id)
+        {
+
+            var products = await uow.Products.GetByCategoryAsync(id);
+            return products.Adapt<IEnumerable<ProductListResponse>>();
         }
     }
 }

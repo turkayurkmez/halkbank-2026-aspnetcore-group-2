@@ -1,4 +1,5 @@
 ﻿using ECommerce.Infrastructure.Entities;
+using ECommerce.API.Models.Responses;
 
 namespace ECommerce.API.Services
 {
@@ -6,15 +7,19 @@ namespace ECommerce.API.Services
     {
         Task<Product> CreateAsync(Product product);
         Task<Product?> GetProductAsync(int id);
-        Task<IEnumerable<Product>> GetProductsAsync();
+        Task<IEnumerable<ProductListResponse>> GetProductsAsync();
 
-        Task<IEnumerable<Product>> SearchAsync(string name);
-        Task<IEnumerable<Product>> SearchAsync(decimal minPrice, decimal maxPrice);
+        Task<IEnumerable<ProductListResponse>> SearchAsync(string name);
+        Task<IEnumerable<ProductListResponse>> SearchAsync(decimal minPrice, decimal maxPrice);
 
         Task<bool> DeleteAsync(int id);
         Task<Product> UpdateAsync(Product product);
 
         Task<Product> DiscountPrice(int id, decimal discountRate);
+
+        Task<IEnumerable<ProductListResponse>> GetProductsWithCategoryAsync();
+
+        Task<IEnumerable<ProductListResponse>> GetProductsByCategoryAsync(int id);
 
 
     }

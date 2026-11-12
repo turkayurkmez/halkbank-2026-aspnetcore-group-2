@@ -1,4 +1,5 @@
 
+using ECommerce.API.Mapping;
 using ECommerce.API.Middleware;
 using ECommerce.API.Models.Requests;
 using ECommerce.API.Notifications;
@@ -10,6 +11,7 @@ using ECommerce.Infrastructure.Data;
 using ECommerce.Infrastructure.Repositories;
 using ECommerce.Infrastructure.UnitOfWorkPattern;
 using FluentValidation;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using System.Diagnostics;
@@ -43,6 +45,11 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(buil
 
 builder.Services.AddValidatorsFromAssemblyContaining<CreateProductRequest>();
 
+//Not: aşağıda yazılacaklar, Mapster Config yazdıysanız gereklidir:
+TypeAdapterConfig.GlobalSettings.Default.RequireDestinationMemberSource(true); //bu satır
+TypeAdapterConfig.GlobalSettings.Scan(typeof(ProductMappingConfig).Assembly); //bu satır
+builder.Services.AddMapster();
+TypeAdapterConfig.GlobalSettings.Compile(); //bu satır...
 
 var app = builder.Build();
 //buradan sonra builder.Services kısmına müdahale edemezsiniz!!!!!
