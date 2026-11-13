@@ -90,7 +90,18 @@ EF tabanlı repository ile uyumlu hale getirilmesi
 - Mapster yapılandırması (`TypeAdapterConfig`, `RequireDestinationMemberSource`, `Scan`, `AddMapster`, `Compile`)
 - Eşleme kurallarının ayrı sınıfta toplanması (`ProductMappingConfig`)
 - Yanıt modelleri (`ProductListResponse`, `CategoryResponse`) kullanımı
-- Ürün eşleme ve kategoriye göre ürün sorgulama (repository ve servis katmanında)
+servis katmanında)
+
+### 2026-11-13
+
+- Katmanlı mimarinin genişletilmesi: Domain ve Application katmanlarının ayrı projelere ayrılması (`ECommerce.Domain`, `ECommerce.Application`)
+- Entity'lerin, `IEntity` arayüzünün ve özel istisnaların (`DataUpdateException`) Domain katmanına taşınması
+- Servis, validator, bildirim ve eşleme sınıflarının Application katmanına taşınması
+- Katmanlar arası proje referansları ve bağımlılık yönü
+- Katmana özel servis kaydı (`DependencyInjection` extension'ı)
+- Eski `InMemoryStore` yapısının kaldırılması
+- MediatR ile CQRS yaklaşımı: komut (`CreateProductCommand`) ve sorgu (`GetProductsQuery`) ayrımı
+- Handler sınıfları (`CreateProductHandler`, `GetProductsHandler`) ve ürün işlemlerinin controller'dan MediatR'a taşınması
 
 ## SOLID Bağlantısı (Bugünün Çalışmalarına Göre)
 
