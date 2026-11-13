@@ -1,6 +1,8 @@
-﻿using ECommerce.Infrastructure.Data;
-using ECommerce.Infrastructure.Entities;
+﻿using ECommerce.Domain;
+using ECommerce.Infrastructure.Data;
+using ECommerce.Domain.Exceptions;
 using ECommerce.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -31,7 +33,16 @@ namespace ECommerce.Infrastructure.UnitOfWorkPattern
 
         public async Task<int> SaveChangesAsync()
         {
-            return await db.SaveChangesAsync();
+            try
+            {
+                return await db.SaveChangesAsync();
+            }
+            catch (DbUpdateException updateException)
+            {
+
+                throw new DataUpdateException(updateException);
+            }
+          
         }
     }
 }

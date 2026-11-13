@@ -1,4 +1,5 @@
-﻿using ECommerce.Infrastructure.Entities;
+﻿using ECommerce.Domain;
+
 
 namespace ECommerce.Infrastructure.Repositories
 {

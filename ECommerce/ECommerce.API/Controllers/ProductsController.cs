@@ -1,8 +1,8 @@
 ﻿using ECommerce.API.Extensions;
-using ECommerce.API.Models.Requests;
-using ECommerce.API.Models.Responses;
-using ECommerce.API.Services;
-using ECommerce.Infrastructure.Entities;
+using ECommerce.Application.Requests;
+using ECommerce.Application.Responses;
+using ECommerce.Application.Services;
+using ECommerce.Domain;
 using FluentValidation;
 using Mapster;
 using Microsoft.AspNetCore.Mvc;

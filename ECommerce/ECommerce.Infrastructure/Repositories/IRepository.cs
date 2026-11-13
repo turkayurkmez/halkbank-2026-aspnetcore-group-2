@@ -1,4 +1,5 @@
-﻿using ECommerce.Infrastructure.Entities;
+﻿
+using ECommerce.Domain;
 using System.Linq.Expressions;
 
 namespace ECommerce.Infrastructure.Repositories

@@ -1,12 +1,12 @@
 
-using ECommerce.API.Mapping;
-using ECommerce.API.Middleware;
-using ECommerce.API.Models.Requests;
-using ECommerce.API.Notifications;
-using ECommerce.API.Options;
 
-using ECommerce.API.Services;
-using ECommerce.API.Store;
+using ECommerce.API.Middleware;
+using ECommerce.Application;
+using ECommerce.Application.Mapping;
+using ECommerce.Application.Notifications;
+using ECommerce.Application.Options;
+using ECommerce.Application.Requests;
+using ECommerce.Application.Services;
 using ECommerce.Infrastructure.Data;
 using ECommerce.Infrastructure.Repositories;
 using ECommerce.Infrastructure.UnitOfWorkPattern;
@@ -32,24 +32,12 @@ builder.Services.AddResponseCompression();
 
 builder.Services.Configure<ShopOption>(builder.Configuration.GetSection("Shop"));
 
-//builder.Services.AddSingleton<InMemoryStore>();
-builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddScoped<IOrderService, OrderService>();
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+//Bu extension metod, Application içinde yazıldı. O katmanda yer alan tüm dependency injection gereksinimlerni bu metot karşılıyor:
+builder.Services.AddAplication();
 
-builder.Services.AddSingleton<INotificationChannel, EmailChannel>();
-builder.Services.AddSingleton<INotificationChannel, SMSChannel>();
-builder.Services.AddSingleton<INotificationChannel, WhatsAppChannel>();
-builder.Services.AddScoped<NotificationService>();
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
-builder.Services.AddValidatorsFromAssemblyContaining<CreateProductRequest>();
 
-//Not: aşağıda yazılacaklar, Mapster Config yazdıysanız gereklidir:
-TypeAdapterConfig.GlobalSettings.Default.RequireDestinationMemberSource(true); //bu satır
-TypeAdapterConfig.GlobalSettings.Scan(typeof(ProductMappingConfig).Assembly); //bu satır
-builder.Services.AddMapster();
-TypeAdapterConfig.GlobalSettings.Compile(); //bu satır...
 
 var app = builder.Build();
 //buradan sonra builder.Services kısmına müdahale edemezsiniz!!!!!

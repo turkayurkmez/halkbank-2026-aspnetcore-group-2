@@ -1,5 +1,6 @@
-﻿using ECommerce.Infrastructure.Data;
-using ECommerce.Infrastructure.Entities;
+﻿using ECommerce.Domain;
+using ECommerce.Domain;
+using ECommerce.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 

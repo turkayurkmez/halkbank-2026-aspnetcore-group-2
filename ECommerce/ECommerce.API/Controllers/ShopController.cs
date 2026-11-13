@@ -1,4 +1,5 @@
-﻿using ECommerce.API.Options;
+﻿
+using ECommerce.Application.Options;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
