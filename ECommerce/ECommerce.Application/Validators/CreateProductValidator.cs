@@ -1,11 +1,11 @@
-﻿
+﻿using ECommerce.Application.Features.Products.Commands.CreateProduct;
 using ECommerce.Application.Requests;
 using ECommerce.Infrastructure.UnitOfWorkPattern;
 using FluentValidation;
 
 namespace ECommerce.Application.Validators
 {
-    public class CreateProductValidator : AbstractValidator<CreateProductRequest>
+    public class CreateProductValidator : AbstractValidator<CreateProductCommand>
     {
         public CreateProductValidator(IUnitOfWork unitOfWork)
         {

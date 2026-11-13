@@ -28,10 +28,18 @@ namespace ECommerce.Application
             services.AddValidatorsFromAssemblyContaining<CreateProductRequest>();
 
             //Not: aşağıda yazılacaklar, Mapster Config yazdıysanız gereklidir:
-            TypeAdapterConfig.GlobalSettings.Default.RequireDestinationMemberSource(true); //bu satır
-            TypeAdapterConfig.GlobalSettings.Scan(typeof(ProductMappingConfig).Assembly); //bu satır
+            //TypeAdapterConfig.GlobalSettings.Default.RequireDestinationMemberSource(true); //bu satır
+            //TypeAdapterConfig.GlobalSettings.Scan(typeof(ProductMappingConfig).Assembly); //bu satır
             services.AddMapster();
-            TypeAdapterConfig.GlobalSettings.Compile(); //bu satır...
+//            TypeAdapterConfig.GlobalSettings.Compile(); //bu satır...
+
+            services.AddMediatR(config =>
+            {
+                config.RegisterServicesFromAssemblyContaining<CreateProductRequest>();
+            });
+
+
+
 
             return services;
         }
