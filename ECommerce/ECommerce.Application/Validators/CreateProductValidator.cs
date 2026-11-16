@@ -22,7 +22,7 @@ namespace ECommerce.Application.Validators
 
 
 
-            var category = unitOfWork.Categories.GetByIdAsync(1);
+           
             RuleFor(c => c.CategoryId)
                  .MustAsync(async (id, _) => await unitOfWork.Categories.GetByIdAsync(id) is not null)
                  .WithMessage(c => $"{c.CategoryId} id'li kategori bulunamadı");

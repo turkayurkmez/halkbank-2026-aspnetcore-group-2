@@ -1,4 +1,5 @@
-﻿using ECommerce.Application.Mapping;
+﻿using ECommerce.Application.Behaviours;
+using ECommerce.Application.Mapping;
 using ECommerce.Application.Notifications;
 using ECommerce.Application.Requests;
 using ECommerce.Application.Services;
@@ -36,6 +37,7 @@ namespace ECommerce.Application
             services.AddMediatR(config =>
             {
                 config.RegisterServicesFromAssemblyContaining<CreateProductRequest>();
+                config.AddOpenBehavior(typeof(ValidationBehavior<,>));
             });
 
 

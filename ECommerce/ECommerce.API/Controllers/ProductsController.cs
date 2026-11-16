@@ -46,11 +46,11 @@ namespace ECommerce.API.Controllers
         public async Task<IActionResult> Create(CreateProductCommand request)
         {
 
-            var validation = await createValidator.ValidateAsync(request);
-            if (!validation.IsValid)
-            {
-                return validation.ToValidationProblem(this);
-            }
+            //var validation = await createValidator.ValidateAsync(request);
+            //if (!validation.IsValid)
+            //{
+            //    return validation.ToValidationProblem(this);
+            //}
 
 
             var response = await _mediator.Send(request);
