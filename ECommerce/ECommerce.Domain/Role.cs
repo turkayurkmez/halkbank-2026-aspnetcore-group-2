@@ -1,0 +1,13 @@
+﻿namespace ECommerce.Domain
+{
+    public class Role: IEntity
+    {
+        public const string Admin = "Admin";
+        public const string Customer = "Customer";
+
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+
+        public List<User> Users { get; set; } = [];
+    }
+}

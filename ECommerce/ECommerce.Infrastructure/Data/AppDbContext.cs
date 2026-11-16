@@ -13,6 +13,13 @@ namespace ECommerce.Infrastructure.Data
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Review> Reviews { get; set; }
 
+        public DbSet<User> Users => Set<User>();
+        public DbSet<Role> Roles => Set<Role>();
+
+        public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -45,6 +52,8 @@ namespace ECommerce.Infrastructure.Data
 
 
             });
+
+            modelBuilder.Entity<User>().HasMany(u => u.Roles).WithMany(r => r.Users);
         }
 
     }
