@@ -101,7 +101,15 @@ servis katmanında)
 - Katmana özel servis kaydı (`DependencyInjection` extension'ı)
 - Eski `InMemoryStore` yapısının kaldırılması
 - MediatR ile CQRS yaklaşımı: komut (`CreateProductCommand`) ve sorgu (`GetProductsQuery`) ayrımı
-- Handler sınıfları (`CreateProductHandler`, `GetProductsHandler`) ve ürün işlemlerinin controller'dan MediatR'a taşınması
+MediatR'a taşınması
+
+### 2026-11-16
+
+- Ürün doğrulamasının MediatR pipeline'ına taşınması (`ValidationBehavior`, `IPipelineBehavior`)
+- Controller'daki manuel doğrulamanın kaldırılması ve doğrulama hatalarının merkezi yakalanması (`ExceptionHandlingMiddleware`)
+- Kimlik doğrulama altyapısının hazırlanması: `User`, `Role` ve `RefreshToken` domain modelleri
+- Kullanıcı modellerinin `AppDbContext`'e eklenmesi ve yeni migration (`users_added`)
+- Kullanıcı işlemleri için repository arayüzü (`IUserRepository`)
 
 ## SOLID Bağlantısı (Bugünün Çalışmalarına Göre)
 
