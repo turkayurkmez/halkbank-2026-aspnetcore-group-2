@@ -11,13 +11,6 @@ namespace ECommerce.Infrastructure.Repositories
 
         Task<Role?> FindRoleAsync(string name);
 
-       
-    }
 
-    public interface IRefreshTokenRepository : IRepository<RefreshToken>
-    {
-        /*
-         * TODO 1.1: Burada, Revoke meaknizması açıklanmalı
-         */
     }
 }
