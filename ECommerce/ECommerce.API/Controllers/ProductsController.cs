@@ -4,10 +4,11 @@ using ECommerce.Application.Features.Products.Queries.GetProducts;
 
 using ECommerce.Application.Responses;
 using ECommerce.Application.Services;
-
+using ECommerce.Domain;
 using FluentValidation;
 using Mapster;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.API.Controllers
@@ -43,6 +44,7 @@ namespace ECommerce.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = Role.Admin)]
         public async Task<IActionResult> Create(CreateProductCommand request)
         {
 

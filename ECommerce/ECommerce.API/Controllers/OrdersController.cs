@@ -1,6 +1,7 @@
 ﻿
 using ECommerce.Application.Services;
 using ECommerce.Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +19,7 @@ namespace ECommerce.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "MinimumAge18")]
         public async Task<IActionResult> Create(Order order)
         {
             var createdOrder = await orderService.CreateAsync(order);

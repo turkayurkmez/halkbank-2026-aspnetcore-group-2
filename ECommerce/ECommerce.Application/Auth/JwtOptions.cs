@@ -6,6 +6,7 @@ namespace ECommerce.Application.Auth
 {
     public class JwtOptions
     {
+        public const string Section = "Jwt";
         public string Issuer { get; set; } = string.Empty;// token'ı kim verdi?
         public string Audience { get; set; } = string.Empty; //token kime verildi? 
 

@@ -8,6 +8,11 @@ using System.Text;
 
 namespace ECommerce.Application.Auth
 {
+    /*
+     * Bu sınıf neden var? 
+     * Üç senaryoda da (Login, Kullanıcı kaydı ve refreshtoken yeni access token ürettiğinde) geriye aynı response dönecek. 
+     * O halde aynı satırları tekrar tekrar yazmaktansa bu sınıfın nesnesini kullanacağız.
+     */
     public class AuthTokenIssuer(ITokenService tokenService, IUnitOfWork uow)
     {
         public static string Hash(string token) => Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(token)));

@@ -31,7 +31,7 @@ namespace ECommerce.Application.Auth
                     [JwtRegisteredClaimNames.Sub] = user.Id.ToString(),
                     [JwtRegisteredClaimNames.Email] = user.Email,
                     [JwtRegisteredClaimNames.UniqueName] = user.FullName,
-                    [JwtRegisteredClaimNames.Birthdate] = user.BirthDate,
+                    [JwtRegisteredClaimNames.Birthdate] = user.BirthDate.ToString("yyyy-MM-dd"),
                     ["role"] = user.Roles.Select(r => r.Name).ToArray()
                 },
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.SigningKey)), SecurityAlgorithms.HmacSha256)

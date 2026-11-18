@@ -1,11 +1,14 @@
-﻿using ECommerce.Application.Behaviours;
+﻿using ECommerce.Application.Auth;
+using ECommerce.Application.Behaviours;
 using ECommerce.Application.Mapping;
 using ECommerce.Application.Notifications;
 using ECommerce.Application.Requests;
 using ECommerce.Application.Services;
+using ECommerce.Infrastructure.Auth;
 using ECommerce.Infrastructure.UnitOfWorkPattern;
 using FluentValidation;
 using Mapster;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -15,7 +18,7 @@ namespace ECommerce.Application
 {
     public static  class DependencyInjection
     {
-        public static IServiceCollection AddAplication(this IServiceCollection services) {
+        public static IServiceCollection AddAplication(this IServiceCollection services, IConfiguration configuration) {
 
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IOrderService, OrderService>();
@@ -25,6 +28,9 @@ namespace ECommerce.Application
             services.AddSingleton<INotificationChannel, SMSChannel>();
             services.AddSingleton<INotificationChannel, WhatsAppChannel>();
             services.AddScoped<NotificationService>();
+            services.AddScoped<IPasswordHasher, PasswordHasher>();
+            services.AddScoped<AuthTokenIssuer>();
+            services.AddScoped<ITokenService, JwtTokenService>();
 
             services.AddValidatorsFromAssemblyContaining<CreateProductRequest>();
 
@@ -40,6 +46,7 @@ namespace ECommerce.Application
                 config.AddOpenBehavior(typeof(ValidationBehavior<,>));
             });
 
+            services.AddOptions<JwtOptions>().Bind(configuration.GetSection(JwtOptions.Section));
 
 
 

@@ -1,7 +1,9 @@
 
 
+using ECommerce.API.Authorization;
 using ECommerce.API.Middleware;
 using ECommerce.Application;
+using ECommerce.Application.Auth;
 using ECommerce.Application.Mapping;
 using ECommerce.Application.Notifications;
 using ECommerce.Application.Options;
@@ -12,9 +14,13 @@ using ECommerce.Infrastructure.Repositories;
 using ECommerce.Infrastructure.UnitOfWorkPattern;
 using FluentValidation;
 using Mapster;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using System.Diagnostics;
+using System.Text;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,10 +39,37 @@ builder.Services.AddResponseCompression();
 builder.Services.Configure<ShopOption>(builder.Configuration.GetSection("Shop"));
 
 //Bu extension metod, Application içinde yazıldı. O katmanda yer alan tüm dependency injection gereksinimlerni bu metot karşılıyor:
-builder.Services.AddAplication();
+builder.Services.AddAplication(builder.Configuration);
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
+builder.Services.AddOptions<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme).Configure<IOptions<JwtOptions>>((bearer, jwtAccessor) =>
+{
+    //gelen token'ı nasıl onaylayacaksınız (verification)
+    var jwt = jwtAccessor.Value;
+    bearer.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidIssuer = jwt.Issuer,
+        ValidateAudience = true,
+        ValidAudience = jwt.Audience,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.SigningKey)),
+        ValidAlgorithms = [SecurityAlgorithms.HmacSha256],
+        ValidateLifetime = true,
+        NameClaimType = "unique_name",
+        RoleClaimType = "role"
+    };
+    
+});
+
+
+
+builder.Services.AddAuthorizationBuilder()
+                .AddPolicy("MinimumAge18", policy => policy.RequireAuthenticatedUser().AddRequirements(new MinimumAgeRequirement(18)));
+              
 
 
 var app = builder.Build();
@@ -69,6 +102,9 @@ app.MapGet("/ping", () =>
 {
     Results.Ok(new { status="ok. Uygulama ayakta" });
 });
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 

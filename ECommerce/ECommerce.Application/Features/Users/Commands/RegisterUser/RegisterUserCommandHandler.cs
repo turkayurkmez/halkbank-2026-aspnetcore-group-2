@@ -10,7 +10,7 @@ using System.Text;
 
 namespace ECommerce.Application.Features.Users.Commands.RegisterUser
 {
-    public class RefreshTokenCommandHandler(IUnitOfWork uow, IPasswordHasher hasher, AuthTokenIssuer issuer) : IRequestHandler<RegisterUserCommand, AuthResponse>
+    public class RegisterUserCommandHandler(IUnitOfWork uow, IPasswordHasher hasher, AuthTokenIssuer issuer) : IRequestHandler<RegisterUserCommand, AuthResponse>
     {
         public async Task<AuthResponse> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
