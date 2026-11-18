@@ -111,6 +111,20 @@ MediatR'a taşınması
 - Kullanıcı modellerinin `AppDbContext`'e eklenmesi ve yeni migration (`users_added`)
 - Kullanıcı işlemleri için repository arayüzü (`IUserRepository`)
 
+### 2026-11-17
+
+- Kimlik doğrulama altyapısının genişletilmesi: kullanıcı ve refresh token repository'leri (`UserRepository`, `RefreshTokenRepository`)
+- Şifre hashleme soyutlaması (`IPasswordHasher`) ve `IUnitOfWork` güncellemesi
+- JWT token üretim altyapısı (`ITokenService`, `JwtTokenService`, `JwtOptions`, `AuthTokenIssuer`)
+- Kullanıcı kaydı komutu, handler'ı ve doğrulayıcısı (`RegisterUserCommand`)
+
+### 2026-11-18
+
+- JWT kimlik doğrulama akışının API'ye eklenmesi (`AuthController`, `Program.cs` ve `appsettings.json` ayarları)
+- Giriş (`LoginCommand`) ve refresh token (`RefreshTokenCommand`) komutları, handler'ları ve doğrulayıcıları
+- Yetkilendirme: yaş sınırı kuralı (`MinimumAgeRequirement`) ve controller'larda (`ProductsController`, `OrdersController`) yetki kontrolü
+- Kayıt handler'ının yeniden adlandırılması (`RegisterUserCommandHandler`)
+
 ## SOLID Bağlantısı (Bugünün Çalışmalarına Göre)
 
 Bu değişikliklerde özellikle aşağıdaki ilkeler vurgulanmıştır:
