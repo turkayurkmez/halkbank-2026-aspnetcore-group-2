@@ -17,6 +17,7 @@
         
         public async Task InvokeAsync(HttpContext context)
         {
+            
             //next ÇAĞRILMADAN ÖNCE: istek henüz yeni geliyor.
             _logger.LogInformation("Http isteği, middleware'a geldi...");
             await _next(context);

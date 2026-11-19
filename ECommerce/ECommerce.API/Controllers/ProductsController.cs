@@ -34,6 +34,7 @@ namespace ECommerce.API.Controllers
             var request = new GetProductsQuery();
             var response = await _mediator.Send(request);
             return Ok(response);
+           
         }
 
         [HttpGet("{id:int}")]

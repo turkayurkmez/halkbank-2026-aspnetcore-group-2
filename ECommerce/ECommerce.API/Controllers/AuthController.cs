@@ -18,7 +18,7 @@ namespace ECommerce.API.Controllers
         public async Task<ActionResult<AuthResponse>> Login(LoginCommand command) => Ok(await mediator.Send(command));
 
         [HttpPost("refresh")]
-        public async Task<ActionResult<AuthResponse>> Login(RefreshTokenCommand command) => Ok(await mediator.Send(command));
+        public async Task<ActionResult<AuthResponse>>Refresh(RefreshTokenCommand command) => Ok(await mediator.Send(command));
 
     }
 }

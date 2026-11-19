@@ -1,5 +1,6 @@
 ﻿
 
+using ECommerce.Application.Exceptions;
 using ECommerce.Application.Responses;
 using ECommerce.Domain;
 using ECommerce.Infrastructure.Repositories;
@@ -31,7 +32,13 @@ namespace ECommerce.Application.Services
 
         public async Task<Product?> GetProductAsync(int id)
         {
-            return await uow.Products.GetByIdAsync(id);
+            var product = await uow.Products.GetByIdAsync(id);
+            if (product is null)
+            {
+                throw new NotFoundException($"{id} id'li ürün bulunamadı");
+            }
+
+            return product;
         }
 
         public async Task<Product> CreateAsync(Product product)
