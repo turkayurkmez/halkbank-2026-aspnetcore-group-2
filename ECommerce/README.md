@@ -125,6 +125,13 @@ MediatR'a taşınması
 - Yetkilendirme: yaş sınırı kuralı (`MinimumAgeRequirement`) ve controller'larda (`ProductsController`, `OrdersController`) yetki kontrolü
 - Kayıt handler'ının yeniden adlandırılması (`RegisterUserCommandHandler`)
 
+### 2026-11-19
+
+- Hata yönetiminin iyileştirilmesi: uygulama özel istisna tipi (`AppException`) ve `ExceptionHandlingMiddleware` güncellemesi
+- Ürün bulunamadı akışının düzeltilmesi (`ProductService`, `ProductsController`)
+- `AuthController` ve `RequestLoggingMiddleware` düzenlemeleri
+- Serilog ile yapılandırılabilir loglama (`Program.cs` ve `appsettings.json` ayarları)
+
 ## SOLID Bağlantısı (Bugünün Çalışmalarına Göre)
 
 Bu değişikliklerde özellikle aşağıdaki ilkeler vurgulanmıştır:
